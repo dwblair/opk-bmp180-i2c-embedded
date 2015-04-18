@@ -1,0 +1,32 @@
+#!/usr/bin/python
+
+import Adafruit_BMP.BMP085 as BMP085
+
+import time
+import argparse
+import serial
+
+DEFAULT_BAUDRATE = 9600
+
+parser = argparse.ArgumentParser()
+
+#parser.add_argument("-p","--path", required=True, help="path to the sensor")
+parser.add_argument("-v", "--verbose", action="store_true", help="increase output verbosity")
+
+args = parser.parse_args()
+
+# Default constructor will pick a default I2C bus.
+#
+# For the Raspberry Pi this means you should hook up to the only exposed I2C bus
+# from the main GPIO header and the library will figure out the bus number based
+# on the Pi's revision.
+#
+# For the Beaglebone Black the library will assume bus 1 by default, which is
+# exposed with SCL = P9_19 and SDA = P9_20.
+sensor = BMP085.BMP085()
+
+# Optionally you can override the bus number:
+#sensor = BMP085.BMP085(busnum=2)
+
+# You can also optionally change the BMP085 mode to one of BMP085_ULTRALOWPOWER, 
+print '[{{Temperature_C: {0:0.2f}}},{{Pressure_Pa: {0:0.2f}}}]'.format(sensor.read_temperature(),sensor.read_pressure())
