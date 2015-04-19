@@ -11,9 +11,9 @@ DEFAULT_BAUDRATE = 9600
 parser = argparse.ArgumentParser()
 
 parser.add_argument("-v", "--verbose", action="store_true", help="increase output verbosity")
-parser.add_argument("-m", "--measurement", required='true', help="measurement: either 'pressure' or 'temperature'")
+#parser.add_argument("-m", "--measurement", required='true', help="measurement: either 'pressure' or 'temperature' or 'both'")
 
-parser.add_argument("-j", "--json", help="output json packed with id [argument]")
+#parser.add_argument("-j", "--json", help="output json packed with id [argument]")
 
 
 args = parser.parse_args()
@@ -36,13 +36,20 @@ sensor = BMP085.BMP085()
 
 #print '{0:0.2f}'.format(sensor.read_pressure()
 
-if args.measurement == 'pressure':
-    reading="{0:0.2f}".format(sensor.read_pressure())
+pressure = "{0:0.2f}".format(sensor.read_pressure())
+temperature = "{0:0.2f}".format(sensor.read_temperature())
 
-if args.measurement == 'temperature':
-    reading="{0:0.2f}".format(sensor.read_temperature())
+#if args.measurement == 'pressure':
+#    reading="{0:0.2f}".format(sensor.read_pressure())
 
-if args.json:
-    print "{\""+args.json+"\":"+reading+"}"
-else:
-    print reading 
+#if args.measurement == 'temperature':
+#    reading="{0:0.2f}".format(sensor.read_temperature())
+
+#if args.json:
+#    print "{\""+args.json+"\":"+reading+"}"
+#else:
+#    print reading 
+
+print "{{\"pressure\":"+pressure+"},{\"temperature\":"+temperature+"}}"
+
+
